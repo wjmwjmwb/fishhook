@@ -134,8 +134,12 @@ static void perform_rebinding_with_section(struct rebindings_entry *rebindings,
               indirect_symbol_bindings[i] != cur->rebindings[j].replacement) {
             *(cur->rebindings[j].replaced) = indirect_symbol_bindings[i];
           }
-          indirect_symbol_bindings[i] = cur->rebindings[j].replacement;
-          goto symbol_loop;
+        if (i < ( sizeof(indirect_symbol_bindings) / sizeof(indirect_symbol_bindings[0]))) {
+                       if (cur != NULL) {
+                           indirect_symbol_bindings[i] = cur->rebindings[j].replacement;
+              }
+        }
+        goto symbol_loop;
         }
       }
       cur = cur->next;
